@@ -1,0 +1,160 @@
+/* Form Container */
+.form-container {
+  max-width: 650px;
+  margin: 50px auto;
+}
+.form-container h2 {
+  text-align: center;
+  color: var(--black-clr);
+}
+.form-container header p {
+  margin-block: 6px;
+  font-weight: 400;
+  color: var(--text-clr);
+  font-size: 1rem;
+}
+.form-container header a {
+  color: var(--link-clr);
+}
+
+/* Form Fields */
+.input-field {
+  margin-top: 30px;
+}
+.input-label {
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text-clr);
+}
+.input-field input,
+.input-field select,
+.input-field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 16px;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: 1px solid var(--dark);
+}
+.password-container {
+  display: flex;
+  justify-content: space-between;
+}
+.password-container span {
+  color: var(--black-clr);
+  cursor: pointer;
+}
+.submit-container {
+  margin-block: 28px;
+}
+.submit-container p {
+  margin-block: 10px;
+  color: var(--dark);
+  font-weight: 400;
+  font-size: 1rem;
+}
+.submit-container a {
+  color: blue;
+  font-weight: 400;
+  margin-left: 8px;
+  position: relative;
+}
+.submit-container a:after {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--primary-clr);
+}
+.submit-container a:hover:after {
+  width: 100%;
+}
+.submit-container button {
+  display: block;
+  width: 100%;
+  color: white;
+  background-color: var(--primary-clr);
+  padding-block: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: 0.5s;
+}
+.submit-container button:hover {
+  background-color: var(--primary-dark-clr);
+}
+
+/* New task form styles */
+.priority-filter,
+.input-field:has(select) {
+  position: relative;
+}
+.input-field select,
+.task-control-container select {
+  cursor: pointer;
+  appearance: none; /* removes the default caret icon*/
+  width: 100%;
+}
+/* To add personal dropdown icon */
+.input-field:has(select)::before,
+.input-field:has(select)::after,
+.priority-filter::before,
+.priority-filter::after {
+  --size: 0.33rem;
+  content: "";
+  position: absolute;
+  right: 1rem;
+  pointer-events: none; /* making it unclickable, instead the select is being clicked */
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+}
+.input-field:has(select)::before {
+  border-bottom: var(--size) solid var(--black-clr);
+  top: 63%;
+}
+.priority-filter::before {
+  border-bottom: var(--size) solid var(--black-clr);
+  top: 35px;
+}
+.input-field:has(select)::after {
+  border-top: var(--size) solid var(--black-clr);
+  top: 73%;
+}
+.priority-filter::after {
+  border-top: var(--size) solid var(--black-clr);
+  top: 42px;
+}
+.input-field textarea {
+  resize: none;
+}
+.submitBtn-container {
+  margin-top: 30px;
+}
+.submitBtn-container .btn {
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--white-clr);
+}
+.save-btn,
+.save-edit-btn {
+  background-color: #1b6d2e;
+}
+.save-btn:hover,
+.save-edit-btn:hover {
+  background-color: #155724;
+}
+.cancel-btn,
+.cancel-edit-btn {
+  background-color: #6d1b2e;
+}
+.cancel-btn:hover,
+.cancel-edit-btn:hover {
+  background-color: #571524;
+}
