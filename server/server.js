@@ -25,7 +25,7 @@ const jwt = require("jsonwebtoken");
 
 // Middleware for JWT authentication
 app.use(async (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.header["Authorization"];
   if (!token) return res.status(401).json({ message: `Unauthorized ${token}` });
 
   try {
