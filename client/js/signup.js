@@ -1,5 +1,5 @@
-// const apiUrl = "http://localhost:8080"; // Base URL of the API
-const apiUrl = "https://pro-taskmaster-api.vercel.app"; // Base URL of the API
+const apiUrl = "http://localhost:8080"; // Base URL of the API
+// const apiUrl = "https://pro-taskmaster-api.vercel.app"; // Base URL of the API
 
 // Toggle hide and show password
 const showPassword = document.querySelectorAll(".show-password");

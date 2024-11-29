@@ -1,5 +1,5 @@
-// const apiUrl = "http://localhost:8080"; // Base URL of the API
-const apiUrl = "https://pro-taskmaster-api.vercel.app"; // Base URL of the API
+const apiUrl = "http://localhost:8080"; // Base URL of the API
+// const apiUrl = "https://pro-taskmaster-api.vercel.app"; // Base URL of the API
 
 let currentPage = 1; // Current page for pagination
 const tasksPerPage = 10; // Number of tasks per page
