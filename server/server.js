@@ -5,7 +5,6 @@ require("./config/db"); // Import database connection
 const frontendUrl = "https://taskmaster-demo.vercel.app";
 
 const authRoutes = require("./routes/auth"); // Import authentication routes
-const taskRoutes = require("./routes/taskRoutes"); // Import task routes
 
 const app = express();
 
@@ -20,31 +19,12 @@ const corsOptions = {
 app.use(cors(corsOptions)); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
 
-// Middleware to check for JWT in Authorization header
-const jwt = require("jsonwebtoken");
-
-// Middleware for JWT authentication
-app.use(async (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.user = decoded.user;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
-  }
-});
-
 // Defines info for the root
 app.get("/", (req, res) => {
   res.json({ info: "TaskMaster API" });
 });
 // Defines authentication routes for registration and login
 app.use("/api/auth", authRoutes);
-// Defines task routes for CRUD operations on tasks
-app.use("/api/tasks", taskRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
