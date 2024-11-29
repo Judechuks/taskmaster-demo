@@ -38,7 +38,7 @@ async function loadTasks() {
       `${apiUrl}/api/tasks?page=${currentPage}&limit=${tasksPerPage}`,
       {
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       }
@@ -298,7 +298,7 @@ async function filterTasks() {
 
     const response = await fetch(url, {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -326,7 +326,7 @@ async function markTaskAsDone(taskId) {
     const response = await fetch(`${apiUrl}/api/tasks/${taskId}/complete`, {
       method: "PUT",
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -354,7 +354,7 @@ async function markTaskAsPending(taskId) {
     const response = await fetch(`${apiUrl}/api/tasks/${taskId}/pending`, {
       method: "PUT",
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -386,7 +386,7 @@ async function deleteTask(taskId) {
     const response = await fetch(`${apiUrl}/api/tasks/${taskId}`, {
       method: "DELETE",
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -440,7 +440,7 @@ async function editTask(task) {
       const response = await fetch(`${apiUrl}/api/tasks/${task._id}`, {
         method: "PUT",
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
