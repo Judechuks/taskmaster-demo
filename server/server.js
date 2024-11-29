@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("./config/db"); // Import database connection
-const frontendUrl = "";
+const frontendUrl = "https://taskmaster-demo.vercel.app";
 
 const authRoutes = require("./routes/auth"); // Import authentication routes
 const taskRoutes = require("./routes/taskRoutes"); // Import task routes
