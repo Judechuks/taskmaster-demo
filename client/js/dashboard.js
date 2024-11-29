@@ -12,16 +12,16 @@ async function loadUserData() {
     window.location.href = "login.html"; // Redirect to login if not authenticated
   }
 
-  // retrieving user's data
-  const userData = JSON.parse(localStorage.getItem("taskmasterUser"));
+  // Decode token to get user information (you can use a library like jwt-decode)
+  const userPayload = JSON.parse(atob(token.split(".")[1]));
 
-  if (userData.firstname && userData.lastname && userData.email) {
+  if (userPayload.firstname && userPayload.lastname && userPayload.email) {
     document.querySelector(
       ".profile-detail .profile-name"
-    ).innerText = `${userData.firstname} ${userData.lastname}`;
+    ).innerText = `${userPayload.firstname} ${userPayload.lastname}`;
     document.querySelector(".profile-detail .profile-email").innerText =
-      userData.email;
-    document.querySelector("#user_firstname").innerText = userData.firstname;
+      userPayload.email;
+    document.querySelector("#user_firstname").innerText = userPayload.firstname;
   } else {
     displayAlertMessage("User information is not available.", "danger");
   }
