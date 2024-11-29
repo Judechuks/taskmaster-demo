@@ -33,11 +33,17 @@ document
       displayAlertMessage("password can not be empty spaces", "danger");
     } else {
       try {
-        const response = await fetch(`${apiUrl}/api/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
+        const response = await fetch(
+          `${apiUrl}/api/auth/login`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          },
+          {
+            mode: "no-cors",
+          }
+        );
 
         const data = await response.json();
 
