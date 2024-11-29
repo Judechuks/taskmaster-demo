@@ -23,9 +23,11 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Middleware to check for JWT in Authorization header
 const jwt = require("jsonwebtoken");
 
-// Middleware for JWT authentication
+// Middleware to check for JWT in Authorization header
 app.use(async (req, res, next) => {
-  const token = req.header("Authorization");
+  const authHeader = req.header("Authorization"); // Get Authorization header
+  const token = authHeader && authHeader.split(" ")[1]; // Extract token (Bearer <token>)
+
   if (!token)
     return res
       .status(401)
@@ -35,9 +37,9 @@ app.use(async (req, res, next) => {
     const decoded = jwt.verify(
       token,
       "V32PJUakuHKtVfxl2wFazDD+ItEddSwUzHnSzhWeins="
-    );
-    req.user = decoded.user;
-    next();
+    ); // Use your secret here
+    req.user = decoded; // Attach decoded user info to request object
+    next(); // Proceed to next middleware or route handler
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });
   }
