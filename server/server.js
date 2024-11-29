@@ -10,28 +10,43 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: "*", // Allow requests from this origin
-  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: "https://pro-taskmaster.vercel.app", // Allow requests from this origin
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 };
-app.use(cors(corsOptions)); // Enable CORS with specified options
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json()); // Parse JSON request bodies
-app.options("*", cors(corsOptions));
 
-// Defines info for the root
-app.get("/", (req, res) => {
-  res.json({ info: "TaskMaster API" });
-});
-// Defines authentication routes for registration and login
+// Middleware to check for JWT in Authorization header (example)
+const jwt = require("jsonwebtoken");
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Get token from header
+
+  if (!token) return res.sendStatus(401); // No token, unauthorized
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403); // Token invalid, forbidden
+    req.user = user; // Attach user info to request object
+    next(); // Proceed to next middleware or route handler
+  });
+}
+
+// Protect task routes with JWT authentication middleware
+app.use("/api/tasks", authenticateToken, taskRoutes);
+
+// Define authentication routes for registration and login
 app.use("/api/auth", authRoutes);
-// Defines task routes for CRUD operations on tasks
-app.use("/api/tasks", taskRoutes);
 
-// Error handling middleware
+// Global error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
+  console.error(err.stack); // Log the error stack for debugging
+  res
+    .status(500)
+    .json({ error: "Internal Server Error", message: err.message }); // Respond with error details
 });
 
 // Starting the server on specified port (default is 3000)

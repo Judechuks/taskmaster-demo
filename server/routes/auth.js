@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login Route for authenticating users
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   const { email, password } = req.body; // Destructure email and password from request body
 
   try {
@@ -76,6 +76,7 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Error logging in." });
+    next(error); // Pass the error to the global error handler
   }
 });
 
