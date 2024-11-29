@@ -53,7 +53,25 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials." });
     }
 
-    res.status(200).json({ token: "this should be the login token" }); // Sending token back to client for authentication
+    // Generate a JWT token with user ID as payload and send it back to client
+    const token = jwt.sign(
+      {
+        id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+      },
+      "V32PJUakuHKtVfxl2wFazDD+ItEddSwUzHnSzhWeins=",
+      {
+        expiresIn: "1h",
+      },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+
+    // res.status(200).json({ token }); // Sending token back to client for authentication
   } catch (error) {
     res.status(500).json({ error: "Error logging in." });
   }
