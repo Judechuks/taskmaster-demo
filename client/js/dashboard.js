@@ -13,9 +13,9 @@ async function loadUserData() {
   }
 
   // Decode token to get user information (you can use a library like jwt-decode)
-  const userPayload = JSON.parse(atob(token.split(".")[1]));
+  // const userPayload = JSON.parse(atob(token.split(".")[1]));
 
-  if (userPayload.firstname && userPayload.lastname && userPayload.email) {
+  /* if (userPayload.firstname && userPayload.lastname && userPayload.email) {
     document.querySelector(
       ".profile-detail .profile-name"
     ).innerText = `${userPayload.firstname} ${userPayload.lastname}`;
@@ -24,7 +24,7 @@ async function loadUserData() {
     document.querySelector("#user_firstname").innerText = userPayload.firstname;
   } else {
     displayAlertMessage("User information is not available.", "danger");
-  }
+  } */
 
   await loadTasks();
 }
