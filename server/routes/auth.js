@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials." });
     }
 
-    res.status(200).json({ token }); // Sending token back to client for authentication
+    res.status(200).json({ token: "this should be the login token" }); // Sending token back to client for authentication
   } catch (error) {
     res.status(500).json({ error: "Error logging in." });
   }
