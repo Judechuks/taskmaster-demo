@@ -11,7 +11,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: `"${frontendUrl}"`, // Allow requests from this origin
+  origin: `${frontendUrl}`, // Allow requests from this origin
   methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
   allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
