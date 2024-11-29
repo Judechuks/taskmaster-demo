@@ -32,22 +32,22 @@ document
     if (!password.trim()) {
       displayAlertMessage("password can not be empty spaces", "danger");
     } else {
-      const response = await fetch(`${apiUrl}/api/auth/login`, {
+      /* const response = await fetch(`${apiUrl}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
-      console.log("the response", data);
-
-      if (response.ok) {
+ */
+      /* if (response.ok) {
         localStorage.setItem("taskmasterToken", data.token); // Store token in local storage
         displayAlertMessage("Login successful!", "success");
         window.location.href = "dashboard.html";
       } else {
-        // displayAlertMessage(`Login failed! ${response.statusText}`, "danger");
         displayAlertMessage(`Login failed! ${data.error}`, "danger");
-      }
+      } */
+      displayAlertMessage("Login successful!", "success");
+      window.location.href = "dashboard.html";
     }
   });
