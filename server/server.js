@@ -10,7 +10,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: "https://pro-taskmaster.vercel.app", // Allow requests from this origin
+  origin: "https://taskmaster-demo.vercel.app", // Allow requests from this origin
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
