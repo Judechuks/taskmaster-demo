@@ -21,7 +21,7 @@ app.use(cors(corsOptions)); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // Middleware to check for JWT in Authorization header
-// const authMiddleware = require("./middleware/authMiddleware");
+const authMiddleware = require("./middleware/authMiddleware");
 
 // Defines info for the root
 app.get("/", (req, res) => {
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 // Defines authentication routes for registration and login
 app.use("/api/auth", authRoutes);
 // Defines task routes for CRUD operations on tasks
-app.use("/api/tasks", taskRoutes);
+app.use("/api/tasks", authMiddleware, taskRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
