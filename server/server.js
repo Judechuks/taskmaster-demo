@@ -8,7 +8,12 @@ const taskRoutes = require("./routes/taskRoutes"); // Import task routes
 
 const app = express();
 
-app.use(cors()); // Enable CORS with specified options
+app.use(
+  cors({
+    origin: "https://taskmaster-demo.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // Define authentication routes for registration and login
