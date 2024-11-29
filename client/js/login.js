@@ -1,5 +1,5 @@
-// const apiUrl = "http://localhost:8080"; // Base URL of the API
-const apiUrl = "https://pro-taskmaster-api.vercel.app"; // Base URL of the API
+const apiUrl = "http://localhost:8080"; // Base URL of the API
+// const apiUrl = "https://pro-taskmaster-api.vercel.app"; // Base URL of the API
 
 // Toggle hide and show password
 const showPassword = document.querySelectorAll(".show-password");
@@ -47,7 +47,7 @@ document
           window.location.href = "dashboard.html";
         } else {
           // displayAlertMessage(`Login failed! ${response.statusText}`, "danger");
-          displayAlertMessage(`Login failed! ${data.error}`, "danger");
+          displayAlertMessage(`failed to login ${data.error}`, "danger");
         }
       } catch (error) {
         displayAlertMessage(`Login failed! ${error}`, "danger");

@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("./config/db"); // Import database connection
-const apiUrl = "https://pro-taskmaster.vercel.app";
 
 const authRoutes = require("./routes/auth"); // Import authentication routes
 const taskRoutes = require("./routes/taskRoutes"); // Import task routes
@@ -35,11 +34,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong!" });
 });
 
+// Starting the server on specified port (default is 3000)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`); // Log server start message
+});
+
 // Export the app for Vercel to use
 module.exports = app;
-
-// Starting the server on specified port (default is 3000)
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`); // Log server start message
-// });
