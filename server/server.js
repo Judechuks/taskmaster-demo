@@ -29,7 +29,10 @@ app.use(async (req, res, next) => {
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decoded = jwt.verify(
+      token,
+      "V32PJUakuHKtVfxl2wFazDD+ItEddSwUzHnSzhWeins="
+    );
     req.user = decoded.user;
     next();
   } catch (err) {
