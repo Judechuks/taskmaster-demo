@@ -23,18 +23,19 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Middleware to check for JWT in Authorization header
 const jwt = require("jsonwebtoken");
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Get token from header
+// Middleware for JWT authentication
+app.use(async (req, res, next) => {
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-  if (!token) return res.sendStatus(401); // No token, unauthorized
-
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-    if (err) return res.sendStatus(403); // Token invalid, forbidden
-    req.user = user; // Attach user info to request object
-    next(); // Proceed to next middleware or route handler
-  });
-}
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.user = decoded.user;
+    next();
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+});
 
 // Defines info for the root
 app.get("/", (req, res) => {
@@ -42,15 +43,13 @@ app.get("/", (req, res) => {
 });
 // Defines authentication routes for registration and login
 app.use("/api/auth", authRoutes);
-/* // Defines task routes for CRUD operations on tasks
-app.use("/api/tasks", taskRoutes); */
-// Protect task routes with JWT authentication middleware
-app.use("/api/tasks", authenticateToken, taskRoutes);
+// Defines task routes for CRUD operations on tasks
+app.use("/api/tasks", taskRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack); // Log the error stack for debugging
-  res.status(500).json({ error: "Something went wrong!" });
+  res.status(500).json({ error: err.message });
 });
 
 // Export the app for Vercel to use
