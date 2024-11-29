@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("./config/db"); // Import database connection
-const apiUrl = "https://taskmaster-demo-api.vercel.app";
+const frontendUrl = "";
 
 const authRoutes = require("./routes/auth"); // Import authentication routes
 const taskRoutes = require("./routes/taskRoutes"); // Import task routes
@@ -11,7 +11,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: `"${apiUrl}"`, // Allow requests from this origin
+  origin: `"${frontendUrl}"`, // Allow requests from this origin
   methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
   allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
