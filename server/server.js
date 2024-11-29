@@ -11,12 +11,12 @@ const app = express();
 // CORS configuration
 const corsOptions = {
   origin: "https://taskmaster-demo.vercel.app", // Allow requests from this origin
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // Middleware to check for JWT in Authorization header (example)
@@ -48,12 +48,6 @@ app.use((err, req, res, next) => {
     .status(500)
     .json({ error: "Internal Server Error", message: err.message }); // Respond with error details
 });
-
-// Starting the server on specified port (default is 3000)
-/* const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`); // Log server start message
-}); */
 
 // Export the app for Vercel to use
 module.exports = app;
