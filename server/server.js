@@ -15,9 +15,9 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
-app.options("", cors(corsOptions));
 app.use(cors(corsOptions)); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
+app.options("*", cors(corsOptions));
 
 // Defines info for the root
 app.get("/", (req, res) => {
@@ -35,10 +35,10 @@ app.use((err, req, res, next) => {
 });
 
 // Starting the server on specified port (default is 3000)
-const PORT = process.env.PORT || 3000;
+/* const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`); // Log server start message
-});
+}); */
 
 // Export the app for Vercel to use
 module.exports = app;
