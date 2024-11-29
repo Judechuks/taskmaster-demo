@@ -21,29 +21,7 @@ app.use(cors(corsOptions)); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // Middleware to check for JWT in Authorization header
-const jwt = require("jsonwebtoken");
-
-// Middleware to check for JWT in Authorization header
-app.use(async (req, res, next) => {
-  const authHeader = req.header("Authorization"); // Get Authorization header
-  const token = authHeader && authHeader.split(" ")[1]; // Extract token (Bearer <token>)
-
-  if (!token)
-    return res
-      .status(401)
-      .json({ message: `Unauthorized ${req.header("Authorization")}` });
-
-  try {
-    const decoded = jwt.verify(
-      token,
-      "V32PJUakuHKtVfxl2wFazDD+ItEddSwUzHnSzhWeins="
-    ); // Use your secret here
-    req.user = decoded; // Attach decoded user info to request object
-    next(); // Proceed to next middleware or route handler
-  } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
-  }
-});
+// const authMiddleware = require("./middleware/authMiddleware");
 
 // Defines info for the root
 app.get("/", (req, res) => {
