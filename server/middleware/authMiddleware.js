@@ -1,22 +1,25 @@
-// Creating a middleware to protect routes that require authentication.
 const jwt = require("jsonwebtoken");
 
-// Middleware to verify JWT token from request headers
 const authMiddleware = (req, res, next) => {
-  const token = req.headers["authorization"];
+  const authHeader = req.headers["authorization"];
 
-  if (!token) {
-    return res.status(403).json({ error: "No token provided." });
+  if (!authHeader) {
+    return res.status(401).json({
+      error: "Access denied",
+    });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized access." });
-    }
+  const token = authHeader.split(" ")[1];
 
-    req.userId = decoded.id; // Attaching user ID to request object for later use in protected routes
-    next(); // To proceed to next middleware or route handler
-  });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      error: "Invalid token",
+    });
+  }
 };
 
-module.exports = authMiddleware; // Export middleware for use in protected routes
+module.exports = authMiddleware;

@@ -8,38 +8,12 @@ const taskRoutes = require("./routes/taskRoutes"); // Import task routes
 
 const app = express();
 
-// CORS configuration
-const corsOptions = {
-  origin: "https://taskmaster-demo.vercel.app", // Allow requests from this origin
-  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
-
-app.use(cors(corsOptions)); // Enable CORS with specified options
+app.use(cors()); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
-
-// Middleware to check for JWT in Authorization header (example)
-const jwt = require("jsonwebtoken");
-
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Get token from header
-
-  if (!token) return res.sendStatus(401); // No token, unauthorized
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403); // Token invalid, forbidden
-    req.user = user; // Attach user info to request object
-    next(); // Proceed to next middleware or route handler
-  });
-}
-
-// Protect task routes with JWT authentication middleware
-app.use("/api/tasks", authenticateToken, taskRoutes);
 
 // Define authentication routes for registration and login
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", taskRoutes);
 
 // Global error handling middleware
 app.use((err, req, res, next) => {

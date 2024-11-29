@@ -54,18 +54,6 @@ router.post("/login", async (req, res, next) => {
     }
 
     // Generate a JWT token with user ID as payload and send it back to client
-    const token = jwt.sign(
-      {
-        id: user._id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-      },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: "1h",
-      }
-    );
 
     res.status(200).json({
       token,
