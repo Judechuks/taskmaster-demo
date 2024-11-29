@@ -11,14 +11,30 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: "*", // Allow requests from this origin
+  origin: `"${apiUrl}"`, // Allow requests from this origin
   methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
   allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
-app.options("", cors(corsOptions));
+
 app.use(cors(corsOptions)); // Enable CORS with specified options
 app.use(bodyParser.json()); // Parse JSON request bodies
+
+// Middleware to check for JWT in Authorization header
+const jwt = require("jsonwebtoken");
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Get token from header
+
+  if (!token) return res.sendStatus(401); // No token, unauthorized
+
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403); // Token invalid, forbidden
+    req.user = user; // Attach user info to request object
+    next(); // Proceed to next middleware or route handler
+  });
+}
 
 // Defines info for the root
 app.get("/", (req, res) => {
@@ -26,12 +42,14 @@ app.get("/", (req, res) => {
 });
 // Defines authentication routes for registration and login
 app.use("/api/auth", authRoutes);
-// Defines task routes for CRUD operations on tasks
-app.use("/api/tasks", taskRoutes);
+/* // Defines task routes for CRUD operations on tasks
+app.use("/api/tasks", taskRoutes); */
+// Protect task routes with JWT authentication middleware
+app.use("/api/tasks", authenticateToken, taskRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err.stack); // Log the error stack for debugging
   res.status(500).json({ error: "Something went wrong!" });
 });
 
