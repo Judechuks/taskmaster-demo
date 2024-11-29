@@ -12,19 +12,19 @@ async function loadUserData() {
     window.location.href = "login.html"; // Redirect to login if not authenticated
   }
 
-  // Decode token to get user information (you can use a library like jwt-decode)
-  // const userPayload = JSON.parse(atob(token.split(".")[1]));
+  // retrieving user's data
+  const userData = JSON.parse(localStorage.getItem("taskmasterUser"));
 
-  /* if (userPayload.firstname && userPayload.lastname && userPayload.email) {
+  if (userData.firstname && userData.lastname && userData.email) {
     document.querySelector(
       ".profile-detail .profile-name"
-    ).innerText = `${userPayload.firstname} ${userPayload.lastname}`;
+    ).innerText = `${userData.firstname} ${userData.lastname}`;
     document.querySelector(".profile-detail .profile-email").innerText =
-      userPayload.email;
-    document.querySelector("#user_firstname").innerText = userPayload.firstname;
+      userData.email;
+    document.querySelector("#user_firstname").innerText = userData.firstname;
   } else {
     displayAlertMessage("User information is not available.", "danger");
-  } */
+  }
 
   await loadTasks();
 }

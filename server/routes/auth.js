@@ -67,8 +67,14 @@ router.post("/login", async (req, res) => {
       }
     );
 
-    res.status(200).json({ token }); // Sending token back to client for authentication
+    res.status(200).json({
+      token,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+    }); // Sending token back to client for authentication
   } catch (error) {
+    console.error("Error during login:", error);
     res.status(500).json({ error: "Error logging in." });
   }
 });

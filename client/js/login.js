@@ -43,6 +43,14 @@ document
 
         if (response.ok) {
           localStorage.setItem("taskmasterToken", data.token); // Store token in local storage
+          localStorage.setItem(
+            "taskmasterUser",
+            JSON.stringify({
+              firstname: data.firstname,
+              lastname: data.lastname,
+              email: data.email,
+            })
+          ); // Store user's data in local storage
           displayAlertMessage("Login successful!", "success");
           window.location.href = "dashboard.html";
         } else {
