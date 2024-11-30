@@ -39,7 +39,7 @@ router.get("/", authenticateToken, async (req, res) => {
   const { page = 1, limit = 10, priority, status } = req.query; // Include both status and priority parameter
 
   try {
-    const query = { userId: req.user.id };
+    const query = {};
     if (status) {
       query.status = status; // Filter by status if provided 'pending' or 'done'
     }
@@ -73,7 +73,7 @@ router.get("/search", async (req, res) => {
 
   try {
     let tasks;
-    const taskQuery = { userId: req.user.id }; // Initialize an empty query object
+    const taskQuery = {}; // Initialize an empty query object
     if (query) {
       taskQuery.$or = [
         { title: { $regex: query, $options: "i" } }, // Case-insensitive search in title
