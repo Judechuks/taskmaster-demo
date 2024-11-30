@@ -35,11 +35,11 @@ router.post("/", authenticateToken, authorizeTaskAction, async (req, res) => {
 });
 
 // Get all tasks (GET /tasks)
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   const { page = 1, limit = 10, priority, status } = req.query; // Include both status and priority parameter
 
   try {
-    const query = {};
+    const query = { userId: req.user.id };
     if (status) {
       query.status = status; // Filter by status if provided 'pending' or 'done'
     }
