@@ -73,7 +73,7 @@ router.get("/search", async (req, res) => {
 
   try {
     let tasks;
-    const taskQuery = {}; // Initialize an empty query object
+    const taskQuery = { userId: req.user.id }; // Initialize an empty query object
     if (query) {
       taskQuery.$or = [
         { title: { $regex: query, $options: "i" } }, // Case-insensitive search in title
