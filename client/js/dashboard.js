@@ -205,9 +205,13 @@ document
       displayAlertMessage("Please choose task priority and deadline", "danger");
     } else {
       try {
+        const token = localStorage.getItem("taskmasterToken");
         const response = await fetch(`${apiUrl}/api/tasks`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({
             title: taskTitle,
             description: taskDescription,
