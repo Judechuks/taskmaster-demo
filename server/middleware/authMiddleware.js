@@ -10,13 +10,17 @@ const authenticateToken = (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized" }); // No token, unauthorized
   }
 
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: "Invalid token" }); // Token invalid, forbidden
+  jwt.verify(
+    token,
+    "V32PJUakuHKtVfxl2wFazDD+ItEddSwUzHnSzhWeins=",
+    (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" }); // Token invalid, forbidden
+      }
+      req.user = user; // Attach user info to request object
+      next(); // Proceed to next middleware or route handler
     }
-    req.user = user; // Attach user info to request object
-    next(); // Proceed to next middleware or route handler
-  });
+  );
 };
 
 // Authorization middleware for task actions
@@ -41,7 +45,5 @@ const authorizeTaskAction = (req, res, next) => {
     return res.status(403).json({ message: "Forbidden" }); // User is not authorized for this action
   }
 };
-
-console.log("env:", process.env.JWT_SECRET_KEY);
 
 module.exports = { authenticateToken, authorizeTaskAction };
