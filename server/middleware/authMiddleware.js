@@ -42,4 +42,6 @@ const authorizeTaskAction = (req, res, next) => {
   }
 };
 
+console.log("env:", process.env.JWT_SECRET_KEY);
+
 module.exports = { authenticateToken, authorizeTaskAction };
