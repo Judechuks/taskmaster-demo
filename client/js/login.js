@@ -42,7 +42,6 @@ document
         });
 
         const data = await response.json();
-        console.log("the response", data);
 
         if (response.ok) {
           localStorage.setItem("taskmasterToken", data.token); // Store token in local storage
